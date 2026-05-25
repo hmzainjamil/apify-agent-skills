@@ -1,11 +1,11 @@
 # apify-agent-skills
 
-> **Apify agent skills — Claude Code skills for web scraping and data extraction via Apify**
+> **Apify agent skills — Claude Code skills for web scraping via Apify actors**
 
 ![Status](https://img.shields.io/badge/status-active-brightgreen?style=flat)
 ![License](https://img.shields.io/badge/license-MIT-blue?style=flat)
 ![Claude Code](https://img.shields.io/badge/Claude_Code-Skill-FF6B35?style=flat)
-![GitHub Stars](https://img.shields.io/github/stars/hmzainjamil/apify-agent-skills?style=flat)
+![Stars](https://img.shields.io/github/stars/hmzainjamil/apify-agent-skills?style=flat)
 ![Last Commit](https://img.shields.io/github/last-commit/hmzainjamil/apify-agent-skills?style=flat)
 
 ---
@@ -14,14 +14,14 @@
 
 | Concept | Description |
 |---|---|
-| **Apify** | Core capability: apify workflows and automation |
-| **Agent** | Core capability: agent workflows and automation |
-| **Skill** | Core capability: skill workflows and automation |
-| **Scraping** | Core capability: scraping workflows and automation |
-| **Extraction** | Core capability: extraction workflows and automation |
-| **Actor** | Core capability: actor workflows and automation |
-| **Data** | Core capability: data workflows and automation |
-| **Claude** | Core capability: claude workflows and automation |
+| **Apify** | Core apify capability for apify-agent-skills workflows |
+| **Agent** | Core agent capability for apify-agent-skills workflows |
+| **Scraping** | Core scraping capability for apify-agent-skills workflows |
+| **Extraction** | Core extraction capability for apify-agent-skills workflows |
+| **Actor** | Core actor capability for apify-agent-skills workflows |
+| **Data** | Core data capability for apify-agent-skills workflows |
+| **Claude** | Core claude capability for apify-agent-skills workflows |
+| **Automation** | Core automation capability for apify-agent-skills workflows |
 
 ---
 
@@ -29,36 +29,36 @@
 
 ```bash
 # Activate skill
-claude --skill apify-agent-skills 'your task here'
+claude --skill apify-agent-skills 'your task'
 
-# Get help
+# Quick workflow
+claude 'apify automation task'
+
+# Get capabilities
 claude 'what can apify-agent-skills do?'
-
-# Run main workflow
-claude 'run apify workflow'
 ```
 
 ## ■ tip
-> Trigger automatically by mentioning apify or agent in your Claude prompt.
+> Mention **apify** or **agent** in your prompt to auto-activate this skill.
 
 ---
 
 ## ☠️ STARTUPS / BUSINESSES
 
-- **Agencies**: use apify-agent-skills to automate apify workflows
-- **Founders**: ship agent features 10x faster
-- **Freelancers**: deliver skill work with AI assistance
+- **Agencies**: automate apify workflows for clients at scale
+- **Founders**: ship agent features 10x faster with Claude
+- **Freelancers**: deliver scraping work with AI-assisted precision
 
 ---
 
 ## Features
 
-- Apify automation
-- Agent automation
-- Skill automation
-- Scraping automation
-- Extraction automation
-- Actor automation
+- Apify automation and orchestration
+- Agent automation and orchestration
+- Scraping automation and orchestration
+- Extraction automation and orchestration
+- Actor automation and orchestration
+- Data automation and orchestration
 
 ---
 
@@ -85,10 +85,12 @@ claude 'apify task here'
 
 | Variable | Description | Default |
 |---|---|---|
-| `API_KEY` | Primary API key | Required |
-| `MODEL` | AI model to use | claude-sonnet |
-| `DEBUG` | Enable debug mode | false |
-| `MAX_TOKENS` | Max token budget | 8192 |
+| `API_KEY` | Primary API key for service access | Required |
+| `MODEL` | AI model to use | claude-3-5-sonnet |
+| `DEBUG` | Enable verbose debug output | false |
+| `MAX_TOKENS` | Max token budget per request | 8192 |
+| `TIMEOUT` | Request timeout in seconds | 30 |
+| `LOG_LEVEL` | Logging verbosity | info |
 
 ---
 
@@ -96,11 +98,42 @@ claude 'apify task here'
 
 ```
 apify-agent-skills/
-├── README.md          # Documentation
-├── SKILL.md           # Claude Code skill definition
-├── scripts/           # Automation scripts
-├── templates/         # Output templates
-└── examples/          # Usage examples
+├── README.md           # This file
+├── SKILL.md            # Claude Code skill definition
+├── scripts/            # Automation and utility scripts
+├── templates/          # Output and prompt templates
+├── examples/           # Usage examples and demos
+├── tests/              # Unit and integration tests
+└── docs/               # Extended documentation
+    ├── setup.md        # Setup guide
+    ├── api.md          # API reference
+    └── faq.md          # Frequently asked questions
+```
+
+---
+
+## Examples
+
+### Basic Usage
+
+```bash
+# Activate in Claude Code
+claude --skill apify-agent-skills "your task here"
+
+# With options
+claude --skill apify-agent-skills --verbose "detailed task"
+```
+
+### Advanced Workflow
+
+```bash
+# Chain with other skills
+claude --skill apify-agent-skills "step 1" | claude --skill summarize
+
+# Batch processing
+for item in list; do
+  claude --skill apify-agent-skills "process $item"
+done
 ```
 
 ---
@@ -109,16 +142,44 @@ apify-agent-skills/
 
 | Issue | Cause | Fix |
 |---|---|---|
-| Auth fails | Invalid API key | Re-export key |
-| Timeout | Network latency | Increase timeout |
-| Empty output | Bad prompt | Check template |
-| Rate limit | Too many requests | Add delay |
+| Auth fails | Invalid/expired API key | Re-export key in shell profile |
+| Timeout error | Network latency or large payload | Increase TIMEOUT value |
+| Empty output | Prompt too vague | Add more context to request |
+| Rate limit hit | Too many requests | Add delay between calls |
+| Model error | Unsupported model version | Update MODEL variable |
+| Import error | Missing dependency | Run pip install -r requirements.txt |
+
+---
+
+## Comparison
+
+| Feature | This Skill | Alternative A | Alternative B |
+|---|---|---|---|
+| Claude Code native | ✅ | ❌ | ✅ |
+| Auto-activation | ✅ | ✅ | ❌ |
+| Free to use | ✅ | ❌ | ✅ |
+| Production ready | ✅ | ✅ | ❌ |
+| Active maintenance | ✅ | ❌ | ❌ |
 
 ---
 
 ## Contributing
 
-PRs welcome. Open an issue first for major changes.
+1. Fork this repo
+2. Create feature branch: `git checkout -b feat/your-feature`
+3. Commit changes: `git commit -m 'feat: add feature'`
+4. Push: `git push origin feat/your-feature`
+5. Open PR
+
+---
+
+## Changelog
+
+| Version | Changes |
+|---|---|
+| v2.0 | Major refactor, Claude 4 support |
+| v1.5 | Added auto-activation keywords |
+| v1.0 | Initial release |
 
 ---
 
@@ -130,4 +191,8 @@ PRs welcome. Open an issue first for major changes.
 
 ## 📜 License
 
-MIT — free to use, modify, distribute.
+MIT — free to use, modify, and distribute.
+
+---
+
+Made with ❤️ by [@hmzainjamil](https://github.com/hmzainjamil)
