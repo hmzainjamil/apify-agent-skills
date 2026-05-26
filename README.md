@@ -768,7 +768,9 @@ If you're coming from a previous version, or from a different tool entirely:
 - **From a Zapier/Make multi-step:** identify the LLM step. That's the only one that needs to move here. The rest stays where it is.
 - **From a hand-rolled script:** congratulations, you understand the domain. This repo will feel like a faster version of what you already have.
 
-The migration usually takes a Saturday afternoon. Plan for one.
+The migration usually takes a Saturday afternoon. Plan for one. If you hit a snag, open an issue — we've probably seen it.
+
+If you don't hit a snag, the migration was either trivially small or you missed a step. Run the goldens to find out which.
 
 ---
 
