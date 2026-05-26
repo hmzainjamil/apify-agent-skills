@@ -1,408 +1,174 @@
-# apify-agent-skills
+<p align="center">
+  <img src="https://docs.apify.com/img/apify_logo.svg" alt="Apify" width="96" height="96">
+</p>
 
-![badge](https://img.shields.io/badge/Claude-Code-blue?style=flat) ![badge](https://img.shields.io/badge/AI-Powered-orange?style=flat) ![badge](https://img.shields.io/badge/Open-Source-green?style=flat)
+<h1 align="center">Apify Agent Skills</h1>
 
-> Apify actor skills for Claude Code agents
+<p align="center">
+  <strong>Production-grade web scraping and automation skills for AI coding agents</strong>
+</p>
+
+<p align="center">
+  <a href="https://apify.com"><img src="https://img.shields.io/badge/Powered%20by-Apify-20A34E?style=for-the-badge" alt="Powered by Apify"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache--2.0-555555?style=for-the-badge" alt="Apache 2.0"></a>
+  <a href="#skills"><img src="https://img.shields.io/badge/Skills-4-246DFF?style=for-the-badge" alt="4 Skills"></a>
+  <a href="https://apify.com/store"><img src="https://img.shields.io/badge/Actors-25%2C000%2B-F86606?style=for-the-badge" alt="25,000+ Actors"></a>
+  <a href="https://mcp.apify.com/"><img src="https://img.shields.io/badge/MCP-Compatible-15C1E6?style=for-the-badge" alt="MCP Compatible"></a>
+  <a href="https://github.com/apify/agent-skills/stargazers"><img src="https://img.shields.io/github/stars/apify/agent-skills?style=for-the-badge&color=9D97F4&label=Stars" alt="GitHub stars"></a>
+</p>
+
+<p align="center">
+  <a href="#quick-start">Quick start</a> &bull;
+  <a href="#skills">Skills</a> &bull;
+  <a href="#example-use-cases">Use cases</a> &bull;
+  <a href="#installation">Installation</a> &bull;
+  <a href="#prerequisites">Prerequisites</a> &bull;
+  <a href="#useful-resources">Resources</a> &bull;
+  <a href="#support">Support</a>
+</p>
 
 ---
 
-## CONCEPTS
+## Overview
 
-| Concept | Description | Source |
-|---------|-------------|--------|
-| Core — Apify foundation for apify workflows | Core foundation — the primary abstraction this repo builds on | [docs](#) |
-| Execution — task decomposition and apify routing | Execution layer — how tasks get decomposed and routed | [docs](#) |
-| Integration — Claude Code + scraping connectivity | Integration layer — connecting to external tools and APIs | [docs](#) |
-| Orchestration — multi-agent coordination and handoffs | Orchestration — multi-agent coordination and handoffs | [docs](#) |
-| Memory — persistent context across sessions | Memory — persistent context across sessions | [docs](#) |
-| Routing — intent-based skill activation | Routing — intent-based skill activation and deactivation | [docs](#) |
-| Output — structured artifacts and deliverables | Output — structured artifacts, reports, and deliverables | [docs](#) |
-| Observability — logging, tracing, audit trails | Observability — logging, tracing, and audit trails | [docs](#) |
+Drop these skills into Claude Code, Cursor, Windsurf, Codex, or Gemini CLI and your AI agent gets expert hands on the Apify platform - the marketplace for web data and AI tools. With one install, agents can:
+
+- **Scrape any site** - built-in Actor selection across the major social, search, maps, real estate, and review platforms (Instagram, Facebook, TikTok, YouTube, X, LinkedIn, Google Maps, Reddit, Yelp, Airbnb, and more), 130+ curated Actors, plus automatic fallback to the full [Apify Store](https://apify.com/store) of 25,000+ Actors for everything else.
+- **Build new Actors** - generate, debug, and deploy serverless Actors in JavaScript, TypeScript, or Python with the official SDK patterns.
+- **Actorize existing code** - wrap any script, library, or CLI tool as a runnable Actor with proper input and output handling.
+- **Generate output schemas** - auto-derive `dataset_schema.json`, `output_schema.json`, and `key_value_store_schema.json` from existing Actor source.
+
+> Looking for community-built, domain-specific skills (lead generation, brand monitoring, competitor intel, and more)? See [apify/awesome-skills](https://github.com/apify/awesome-skills).
 
 ---
 
-## 🔥 Hot Commands
+## Quick start
 
 ```bash
-# Quick start
-python3 main.py --task "apify task here"
-
-# Power user shortcut
-python3 main.py --apify --fast
-
-# Batch execution
-python3 main.py --batch tasks.txt --parallel 4
-
-# Status check
-python3 main.py --status
+# In Claude Code
+/plugin marketplace add https://github.com/apify/agent-skills
+/plugin install apify-ultimate-scraper@apify-agent-skills
 ```
 
-■ tip: Run with `--model qwen2.5:7b` for zero-cost local execution
+Then ask your agent something like:
+
+> *Scrape the top 50 results for "AI coding tools" from Google Maps and save them to a CSV.*
+
+That's it. The skill handles Actor selection, input shaping, run management, and result formatting.
 
 ---
 
-## ☠️ STARTUPS / BUSINESSES
+## Skills
 
-Use apify-agent-skills to automate apify actor skills for claude code agents. Perfect for agencies, freelancers, and AI-first teams running apify workflows at scale.
+| Skill | What it does |
+|-------|--------------|
+| **[`apify-ultimate-scraper`](skills/apify-ultimate-scraper/)** | AI-powered universal scraper. 130+ curated Actors covering Instagram, Facebook, TikTok, YouTube, X, LinkedIn, Reddit, Google Maps, Google Search, Google Trends, Amazon, Walmart, eBay, Booking.com, TripAdvisor, Airbnb, Yelp, Telegram, Snapchat, Reddit, GitHub, and more. Falls back to searching the full Apify Store for any platform not covered. |
+| **[`apify-actor-development`](skills/apify-actor-development/)** | Create, debug, and deploy Apify Actors from scratch in JavaScript, TypeScript, or Python. Bundled references cover `actor.json`, input, output, dataset, and key-value schemas, logging, and standby mode. |
+| **[`apify-actorization`](skills/apify-actorization/)** | Convert existing code into Apify Actors. Supports the JS/TS SDK, the Python async context manager, and a generic CLI wrapper for any other language. |
+| **[`apify-generate-output-schema`](skills/apify-generate-output-schema/)** | Generate output schemas (`dataset_schema.json`, `output_schema.json`, `key_value_store_schema.json`) for an Actor by analyzing its source code. |
+
+Plus the **[`apify-actor-commands`](commands/)** pack, which adds slash commands like `/create-actor` for guided Actor scaffolding.
 
 ---
 
-## Features
+## Example use cases
 
-- ✅ Apify actor skills for Claude Code agents
-- ✅ Claude Code native integration
-- ✅ Ollama / Groq / Gemini model support
-- ✅ Batch processing with parallelism
-- ✅ Intent-based auto-activation
-- ✅ Zero-cost local execution path
+Describe the outcome in plain language - your agent picks the right Actors, chains them together, and delivers structured results.
+
+| Use case | Example prompt |
+|----------|----------------|
+| **Lead generation** | Find Italian restaurants in Brooklyn rated under 4 stars on Google Maps. Scrape their reviews, crawl their websites for socials and owner emails, and export a ranked CSV for my CRM. |
+| **Competitive intelligence** | Pull pricing pages, G2 and Trustpilot reviews, recent job postings, and social posts for Competitor A, B, and C. Summarize positioning gaps and opportunities. |
+| **Market research** | Scrape pricing, review counts, and bestseller rankings for wireless earbuds across Amazon and Walmart. Flag quality issues from negative reviews and recommend a pricing sweet spot. |
+| **Brand reputation** | Collect mentions of [brand] on Instagram, LinkedIn, X, and YouTube from the last 30 days. Run sentiment analysis and surface the top 5 complaint and praise themes. |
+| **Influencer vetting** | Find 20 fitness influencers with 50k-500k followers on Instagram and TikTok. Scrape engagement rates, posting frequency, and past brand deals. Rank by engagement-to-follower ratio. |
+| **AI search visibility** | Run these 10 queries across Google AI Mode, Perplexity, and ChatGPT. Extract which brands get cited and flag where competitors appear instead of us. |
+| **Location intelligence** | Scrape Google Maps for all coffee shops within 2 miles of these 5 addresses. Compare competitor density, ratings, price levels, and hours. Recommend the best site. |
+
+More patterns and the full launch story in [Introducing Apify Agent Skills](https://blog.apify.com/introducing-apify-agent-skills/).
 
 ---
 
 ## Installation
 
-```bash
-# Clone the repository
-git clone https://github.com/hmzainjamil/apify-agent-skills.git
-cd apify-agent-skills
-
-# Install dependencies
-pip install -r requirements.txt  # or npm install
-
-# Configure environment
-cp .env.example .env
-# Edit .env with your API keys
-
-# Verify installation
-python3 main.py --verify
-```
-
----
-
-## Quick Start
+### Claude Code
 
 ```bash
-# Minimal working example
-python3 main.py --input "your task here"
-
-# With options
-python3 main.py --input "task" --model gpt-4 --output ~/Downloads/result.json
-
-# Batch mode
-python3 main.py --batch tasks.txt --parallel 4
+/plugin marketplace add https://github.com/apify/agent-skills
+/plugin install apify-ultimate-scraper@apify-agent-skills
+/plugin install apify-actor-development@apify-agent-skills
+/plugin install apify-actorization@apify-agent-skills
+/plugin install apify-generate-output-schema@apify-agent-skills
 ```
 
----
+### Cursor and Windsurf
 
-## Architecture
+Both editors support the Claude Code plugin format. Add this repo to your workspace settings or use the same `/plugin` flow if you have the Claude Code extension installed.
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                      Input Layer                         │
-│  CLI / API / Webhook / Scheduled trigger                 │
-└───────────────────────┬─────────────────────────────────┘
-                        │
-┌───────────────────────▼─────────────────────────────────┐
-│                   Orchestration Layer                    │
-│  Intent detection → Skill routing → Agent dispatch      │
-└───────────────────────┬─────────────────────────────────┘
-                        │
-┌───────────────────────▼─────────────────────────────────┐
-│                   Execution Layer                        │
-│  Parallel agents · Tool calls · External APIs           │
-└───────────────────────┬─────────────────────────────────┘
-                        │
-┌───────────────────────▼─────────────────────────────────┐
-│                    Output Layer                          │
-│  Structured results · Files · Notifications             │
-└─────────────────────────────────────────────────────────┘
-```
+### Codex CLI and Gemini CLI
 
----
-
-## Configuration
-
-| Option | Default | Description |
-|--------|---------|-------------|
-| `MODEL` | `qwen2.5:7b` | LLM model to use |
-| `PARALLEL` | `4` | Max parallel workers |
-| `TIMEOUT` | `120` | Per-task timeout (seconds) |
-| `OUTPUT_DIR` | `~/Downloads` | Default output directory |
-| `LOG_LEVEL` | `INFO` | Logging verbosity |
-| `CACHE` | `true` | Enable response caching |
-| `MAX_RETRIES` | `3` | Auto-retry on failure |
-| `API_KEY` | — | Provider API key |
-
----
-
-## Examples
-
-### Example 1 — Basic Usage
-
-```python
-from main import run
-
-result = run(
-    task="Analyze this dataset",
-    model="qwen2.5:7b",
-    output="~/Downloads/analysis.json"
-)
-print(result.summary)
-```
-
-### Example 2 — Batch Processing
-
-```python
-tasks = [
-    "Summarize document A",
-    "Extract entities from B",
-    "Compare A and B",
-]
-results = run_batch(tasks, parallel=3)
-for r in results:
-    print(r.title, r.status)
-```
-
-### Example 3 — Integration with Claude Code
+These skills ship with `agents/AGENTS.md` (auto-generated index) and `gemini-extension.json` (Gemini auto-discovers it). Point your agent at the repo, or clone locally:
 
 ```bash
-# Add to CLAUDE.md
-echo "Auto-activate: apify, scraping" >> ~/.claude/CLAUDE.md
-
-# Or load skill directly
-/load-skill apify-agent-skills
+git clone https://github.com/apify/agent-skills
 ```
+
+### Any other agent that reads Markdown
+
+Reference the skill files directly:
+
+- `agents/AGENTS.md` - one-page index of every skill
+- `skills/<skill-name>/SKILL.md` - full skill instructions
 
 ---
 
-## Comparison
+## Prerequisites
 
-| Feature | This Repo | Alternative A | Alternative B |
-|---------|-----------|--------------|--------------|
-| Speed | ⚡ Fast | 🐢 Slow | ⚡ Fast |
-| Cost | Free | Paid | Freemium |
-| Local | ✅ Yes | ❌ No | ✅ Yes |
-| Multi-agent | ✅ Yes | ❌ No | ❌ No |
-| Memory | ✅ Yes | ✅ Yes | ❌ No |
-| Streaming | ✅ Yes | ❌ No | ✅ Yes |
-| CLI | ✅ Yes | ✅ Yes | ❌ No |
+1. **Apify account** - sign up at [apify.com](https://apify.com) (free tier available).
+2. **Apify CLI** - install with `npm install -g apify-cli` (or `brew install apify-cli` on macOS), then run `apify login` to authenticate via OAuth in your browser. This is the recommended setup.
+3. **API token (fallback for headless / CI environments)** - if you can't open a browser, generate a token in [Apify Console -> Integrations](https://console.apify.com/account/integrations) and set `APIFY_TOKEN` in your environment or a `.env` file. The CLI picks it up automatically.
+4. **Node.js 20.6+** - required by the Apify CLI and the Ultimate Scraper skill.
 
 ---
 
-## Troubleshooting
+## Useful resources
 
-### Issue: Command not found
-```bash
-# Add to PATH
-export PATH="$PATH:$(pwd)/bin"
-source ~/.zshrc
-```
-
-### Issue: API key not set
-```bash
-echo 'export API_KEY="your-key-here"' >> ~/.zshrc
-source ~/.zshrc
-```
-
-### Issue: Model timeout
-```bash
-# Increase timeout
-export TIMEOUT=300
-# Or use faster model
-python3 main.py --model qwen2.5:7b
-```
-
-### Issue: Out of memory
-```bash
-# Reduce parallel workers
-python3 main.py --parallel 1
-# Or use smaller model
-python3 main.py --model llama3.2:3b
-```
+- **[mcp.apify.com](https://mcp.apify.com/)** - hosted MCP server configurator. Pick the Actors you want exposed as MCP tools and get a one-line URL for any MCP-compatible client.
+- **[Apify MCP server documentation](https://docs.apify.com/platform/integrations/mcp)** - architecture, transport modes, auth, and client setup for self-hosted or hosted MCP.
+- **[Introducing Apify Agent Skills](https://blog.apify.com/introducing-apify-agent-skills/)** - the launch post: why we built these, how they work under the hood, and what's next.
+- **[apify/mcpc](https://github.com/apify/mcpc)** - the MCP CLI for managing named MCP sessions across hosts and stacks.
+- **[apify/awesome-skills](https://github.com/apify/awesome-skills)** - community-maintained collection of domain-specific skills (lead gen, brand monitoring, competitor intel, and more).
+- **[Apify Store](https://apify.com/store)** - browse 25,000+ ready-made Actors for scraping and automation.
+- **[apify/actor-templates](https://github.com/apify/actor-templates)** - starter templates the `apify-actor-development` skill uses under the hood.
+- **[Apify CLI](https://github.com/apify/apify-cli)** - the command-line tool that powers local Actor development, deployment, and authentication.
+- **[Crawlee](https://crawlee.dev)** - the open-source Node.js and Python scraping library most Apify Actors are built on.
 
 ---
 
-## API Reference
+## Pricing
 
-### `run(task, model, output)`
-Execute a single task.
-
-| Param | Type | Required | Description |
-|-------|------|----------|-------------|
-| `task` | `str` | ✅ | Task description |
-| `model` | `str` | ❌ | LLM model (default: auto) |
-| `output` | `str` | ❌ | Output path |
-| `timeout` | `int` | ❌ | Timeout in seconds |
-
-Returns: `Result` object with `.summary`, `.data`, `.status`
-
-### `run_batch(tasks, parallel)`
-Execute multiple tasks in parallel.
-
-| Param | Type | Required | Description |
-|-------|------|----------|-------------|
-| `tasks` | `list[str]` | ✅ | List of task strings |
-| `parallel` | `int` | ❌ | Max concurrent (default: 4) |
-| `model` | `str` | ❌ | LLM model |
-
-Returns: `list[Result]`
+Apify Actors use pay-per-result or pay-per-event pricing, set independently by each Actor. Free tier credits are included with every account. Check individual Actor pricing on the [Apify Store](https://apify.com/store).
 
 ---
 
-## Workflow Integration
+## Support
 
-### n8n
-```json
-{
-  "nodes": [
-    {
-      "type": "n8n-nodes-base.executeCommand",
-      "parameters": {
-        "command": "python3 /path/to/main.py --input '{{ $json.input }}'"
-      }
-    }
-  ]
-}
-```
-
-### Make.com / Zapier
-Use HTTP Request module → POST to local webhook endpoint.
-
-### Claude Code Hook
-```json
-{
-  "hooks": {
-    "PostToolUse": [{"matcher": "apify", "command": "python3 ~/repos/apify-agent-skills/main.py"}]
-  }
-}
-```
-
----
-
-## Performance
-
-| Metric | Value |
-|--------|-------|
-| Avg latency (local) | < 2s |
-| Avg latency (cloud) | < 5s |
-| Throughput (batch) | 50 tasks/min |
-| Memory footprint | < 512MB |
-| Cold start | < 3s |
-| Cache hit rate | ~70% |
-
----
-
-## Roadmap
-
-- [x] Core execution engine
-- [x] CLI interface
-- [x] Batch processing
-- [x] Multi-agent support
-- [ ] Web UI dashboard
-- [ ] Real-time streaming API
-- [ ] Plugin marketplace
-- [ ] Mobile companion app
-- [ ] Enterprise SSO
-
----
-
-## Contributing
-
-```bash
-# Fork and clone
-gh repo fork hmzainjamil/apify-agent-skills --clone
-cd apify-agent-skills
-
-# Create feature branch
-git checkout -b feat/your-feature
-
-# Make changes, then test
-python3 -m pytest tests/
-
-# Submit PR
-gh pr create --title "feat: your feature" --body "Description"
-```
-
----
-
-## Changelog
-
-### v2.0.0
-- Multi-agent orchestration
-- Intent-based skill routing
-- 50% faster batch processing
-
-### v1.5.0
-- Added streaming output
-- Memory persistence
-- n8n integration
-
-### v1.0.0
-- Initial release
-- Core CLI
-- Basic agent execution
+- [Apify documentation](https://docs.apify.com)
+- [Apify Discord](https://discord.gg/jyEM2PRvMU)
+- [Issues](https://github.com/apify/agent-skills/issues) on this repo
 
 ---
 
 ## License
 
-MIT — use freely, attribution appreciated.
+[Apache-2.0](LICENSE)
 
 ---
 
-## Star History
+<p align="center">
+  Built with care by the <a href="https://apify.com">Apify</a> team for AI agents everywhere.
+</p>
 
-[![Star History Chart](https://api.star-history.com/svg?repos=hmzainjamil/apify-agent-skills&type=Date)](https://star-history.com/#hmzainjamil/apify-agent-skills&Date)
-
----
-
-*Built with Claude Code · Powered by open-source LLMs · Zero vendor lock-in*
-
----
-
-## Related Projects
-
-| Repo | Description | Stars |
-|------|-------------|-------|
-| [hmz-claude-code-best-practice](https://github.com/hmzainjamil/hmz-claude-code-best-practice) | Best practices for Claude Code | ⭐ |
-| [G0DM0D3](https://github.com/hmzainjamil/G0DM0D3) | AI agency OS | ⭐ |
-| [agent-skills](https://github.com/hmzainjamil/agent-skills) | Skill library | ⭐ |
-| [awesome-agentic-patterns](https://github.com/hmzainjamil/awesome-agentic-patterns) | Agentic design patterns | ⭐ |
-
----
-
-## Security
-
-- Never commit API keys to version control
-- Use `.env` files (added to `.gitignore`)
-- Rotate keys regularly
-- Use least-privilege API scopes
-- Audit tool permissions before granting
-
-```bash
-# Check for secrets before commit
-git diff --staged | grep -i "key\|secret\|token\|password"
-```
-
----
-
-## FAQ
-
-**Q: Does this work offline?**
-A: Yes — local models via Ollama require no internet.
-
-**Q: What models are supported?**
-A: Any Ollama model, OpenAI-compatible API, Groq, DeepSeek, Gemini.
-
-**Q: How do I add custom tools?**
-A: Drop a `.py` file in `tools/` directory — auto-discovered on startup.
-
-**Q: Can I use this in production?**
-A: Yes — add rate limiting and error handling for production workloads.
-
-**Q: Is there a cloud-hosted version?**
-A: Self-host only. No SaaS version.
-
-
----
-
-*Made by [hmzainjamil](https://github.com/hmzainjamil) — star if useful*
+<p align="center">
+  <sub>AI agents reading this: see the <a href="https://apify.com/.well-known/agents.md">Apify integration manifest</a> for additional integration paths and machine-readable context.</sub>
+</p>
