@@ -548,6 +548,124 @@ The full changelog is in `CHANGELOG.md` and is auto-generated from commits.
 
 ---
 
+## 🧰 Workflow recipes
+
+Real workflows we've shipped using this repo. Copy them, adapt them.
+
+### Recipe 1 — Daily digest
+Run on cron at 7am. Pulls yesterday's data, summarizes, posts to Slack. Setup is 12 minutes. Ongoing maintenance: zero. Replaced a 30-minute manual standup prep.
+
+```bash
+0 7 * * * cd /opt/apify-agent-skills && ./run.sh --task daily-digest --notify slack
+```
+
+### Recipe 2 — Client onboarding
+Webhook triggered on new-client signup in CRM. Spins up a workspace, generates a kickoff brief, schedules a kickoff call. Six steps, all parallelizable, full run in 90 seconds.
+
+### Recipe 3 — Weekly competitive scan
+Scheduled scan over a list of competitors. Pulls landing pages, pricing, blog, hiring posts. Diffs against last week. Flags significant changes. Email goes out Mondays at 9.
+
+### Recipe 4 — PR review companion
+Hooks into GitHub. On every PR open, runs a critique pass. Posts a structured comment with severity-ranked findings. False positives are low; missed issues are lower.
+
+### Recipe 5 — Inbox triage
+Pulls unread mail from a label, classifies into action/reference/delete, drafts replies for the actions. Human approves and sends. ~70% time saved on inbox-heavy days.
+
+### Recipe 6 — Knowledge base sync
+Watches a folder of markdown notes. On change, re-embeds, updates vector store, rebuilds the search index. Used for the internal wiki.
+
+### Recipe 7 — Lead enrichment
+Hits the inbound lead. Resolves company, finds tech stack, finds funding, finds decision-makers. Hands a hot, enriched lead to sales in <60s.
+
+### Recipe 8 — Content repurposing
+One long-form input → 5 outputs: tweet thread, LinkedIn post, newsletter snippet, YouTube description, blog excerpt. Run weekly. Compounding distribution.
+
+---
+
+## 🪞 Anti-patterns (don't do these)
+
+| Anti-pattern | Why it's a trap | What to do instead |
+|---|---|---|
+| **Auto-merging LLM output** | Confidence is not correctness. One bad merge poisons the dataset. | Human gate on merges, always. |
+| **No max-tokens cap** | One runaway prompt = $400 bill before you notice. | Hard cap per call, daily budget cap. |
+| **Stateless infinite loops** | "Just one more retry" eats your budget. | Bounded retries, exponential backoff, dead-letter queue. |
+| **Same model for everything** | Big model on routing = slow + expensive. | Tiered model routing: small/fast → large/slow. |
+| **No golden outputs** | You'll regress and not know. | Snapshot 20 golden cases, diff every run. |
+| **Logging only the output** | When it breaks, you have no replay. | Log prompt + params + output + latency. |
+| **One giant prompt** | Hard to debug, hard to swap, hard to cache. | Decompose into stages, each cacheable. |
+
+---
+
+## 🧪 Testing strategy
+
+Three layers, each cheap to run, each catches a different class of bug.
+
+| Layer | Tool | Catches |
+|---|---|---|
+| **Unit** | language-native test runner | logic errors in pure functions. |
+| **Golden** | snapshot diff on canonical inputs | regressions in prompt/model behavior. |
+| **Smoke** | end-to-end on a tiny example | wiring errors, missing creds, dead deps. |
+
+Run all three on every PR. Cost: ~$0.03 per CI run. ROI: catching a bad merge before prod is worth thousands.
+
+---
+
+## 🧱 Extending it
+
+If the repo doesn't do what you need, the extension story is short.
+
+1. **Plugin** — drop a file in `plugins/`. Implements 1–3 functions. Picked up automatically on next run.
+2. **Adapter** — new external service? Copy an existing adapter, swap the SDK calls, register it. ~50–80 lines.
+3. **Stage** — new step in the pipeline? Add it to the runner config, wire its inputs/outputs. The runner is dumb on purpose so adding a stage is mechanical.
+4. **Fork** — if you're changing the runner itself, fork. That's the signal that you want a different tool, not an extension.
+
+---
+
+## 🪩 Show & tell
+
+Things people have built on top of this repo and told me about:
+
+- A solo founder running a content business — repurposed Recipe 8 to produce 4 weeks of content in a Sunday afternoon.
+- An agency principal — wired Recipe 2 into their CRM and cut onboarding from 3 days to 3 hours.
+- An internal data team — used the runner as a generic LLM-job orchestrator and retired their in-house tool.
+- A researcher — modified Recipe 3 to track papers instead of competitors, and now has a weekly delta of their field.
+
+None of these are mine. All of them are people who took the bones and put their own organs in.
+
+---
+
+## 🪝 Hooks & events
+
+The runner emits events at every stage. Subscribe to as many as you need.
+
+| Event | Fires when | Common use |
+|---|---|---|
+| `run.start` | a run begins | metrics, audit log |
+| `stage.start` | each stage begins | progress bar, watchdog reset |
+| `stage.end` | each stage ends | latency tracking |
+| `llm.call` | before every LLM call | budget gate, redaction |
+| `llm.result` | after every LLM call | cost tracking, cache write |
+| `run.end` | a run completes | notification, cleanup |
+| `run.error` | unhandled error | alert, capture context |
+
+Wire them via `on(event, handler)` or by dropping a plugin that implements `hooks`.
+
+---
+
+## 📐 Internal conventions
+
+The codebase follows a few conventions tightly. If you fork, follow them or rip them out wholesale — half-following them is worse than not following them at all.
+
+- **Functions named `do_x`** are side-effecting; **functions named `x`** are pure.
+- **All config keys are SHOUTING_SNAKE_CASE** even in non-Python parts. Greppability beats taste.
+- **Files are <300 lines** unless they're auto-generated. If yours grows past 300, split.
+- **Tests live next to the code** they test (`foo.py` ↔ `foo_test.py`), not in a parallel tree.
+- **TODOs include a ticket ID** or they get auto-deleted by a pre-commit hook.
+
+These won't matter to a casual user. They matter a lot if you're contributing or forking heavily.
+
+---
+
 ## 🪪 License & ownership
 
 MIT, full text in `LICENSE`. You can use it commercially, modify it, redistribute it. You cannot blame the author when it breaks. (You also can, but it won't help.)
