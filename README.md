@@ -702,6 +702,62 @@ Attribution is nice. A star is nicer. A case study is nicest.
 
 ---
 
+## 🧮 Cost model
+
+Six numbers you should know before you scale this.
+
+| Variable | Typical value | Notes |
+|---|---|---|
+| Tokens per run (in) | ~3,500 | scoped task, single decomposition. |
+| Tokens per run (out) | ~1,800 | structured output, one synthesis pass. |
+| API $ per 1k in | $0.003 | Claude Haiku-tier. |
+| API $ per 1k out | $0.015 | Claude Haiku-tier. |
+| Wall time / run | 8–22 min | depends on scope. |
+| Marginal infra cost | <$0.001 | runner is cheap; LLM dominates. |
+
+Multiply through. For 100 runs/day, you're at ~$5/day on Claude Haiku, ~$45/day on Sonnet. Sonnet is worth it when output quality moves a real metric — otherwise stay on Haiku and route up only the synthesis stage.
+
+---
+
+## 🧩 Composition guide
+
+This repo plays well with the broader stack. A few wiring patterns we've shipped:
+
+- **Pair with `autoresearch`** for the research step, then feed structured findings into this repo's synthesis stage. Saves you re-building the research loop.
+- **Pair with `automation-workflow-templates`** to make this repo a step in a larger n8n flow. The runner emits a webhook on `run.end`; n8n catches it and chains the next action.
+- **Pair with `knowledge-work-plugins`** when you want a slide deck or board memo as the final output. This repo handles the gather; plugins handle the format.
+- **Pair with `ai-design-team`** when output needs a brand-consistent visual. Hand off the content; let the design squad add palette and layout.
+- **Pair with `apify-agent-skills`** to source raw web data. Apify pulls, this runner thinks.
+
+The horizontal stack is the moat — each repo is small and replaceable, but together they cover an agency-grade workflow.
+
+---
+
+## 🧱 Why this design will age well
+
+Five things that protect against tech debt over the next 24 months.
+
+1. **Model-agnostic core.** The LLM is one adapter. Swap it in 30 lines. When the next model lands, you're not blocked.
+2. **No frameworks in hot path.** Frameworks deprecate. Stdlib doesn't.
+3. **Schema-versioned outputs.** Every output has a `schema_version`. Migrations are explicit. Old data isn't orphaned.
+4. **Cache by content hash.** When prompts change, cache invalidates correctly. No manual flushing.
+5. **Single binary / single command.** No microservices to coordinate. No service mesh to debug. Less surface, less rot.
+
+---
+
+## 🤝 Contributing
+
+Issues > PRs. If you have a use case, open an issue first. If we agree on the shape, then a PR. Random feature PRs without discussion get closed politely.
+
+For the PRs we do accept:
+
+- **One concern per PR.** Multi-concern PRs are split or rejected.
+- **A test or a golden.** No exceptions for changes that touch behavior.
+- **A line in the changelog.** If your change isn't worth a changelog line, it isn't worth merging.
+- **A `why` in the description.** "Fixes the thing" doesn't tell me anything in 6 months.
+
+---
+
 ## ⭐ Star History
 
 <a href="https://star-history.com/#hmzainjamil/apify-agent-skills&Date">
