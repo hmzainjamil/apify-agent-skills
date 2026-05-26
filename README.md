@@ -745,6 +745,33 @@ Five things that protect against tech debt over the next 24 months.
 
 ---
 
+## 📡 Telemetry & observability
+
+You can't operate what you can't see. Five signals worth wiring before you go to prod.
+
+1. **Request log** — one line per run: timestamp, run ID, stage timings, cost, success bool. Pipe to your log store.
+2. **Metric: `runs_total{status}`** — counter, partitioned by success/failure. Dashboard it.
+3. **Metric: `run_duration_seconds`** — histogram with buckets at p50/p95/p99. Alert on p95 > 2× baseline.
+4. **Metric: `cost_usd_total`** — counter, partitioned by model. Daily budget alert wires off this.
+5. **Trace** — for the curious. OpenTelemetry, one span per stage. When something is slow, the trace tells you which stage to fix.
+
+Five signals. ~80 lines of code. Pays back the first time something breaks at 2am.
+
+---
+
+## 🪂 Migration notes
+
+If you're coming from a previous version, or from a different tool entirely:
+
+- **From v0 of this repo:** the config schema changed. Run `./scripts/migrate-v0-v1.sh`. Idempotent. Reversible. Backup is automatic.
+- **From a LangChain-based pipeline:** rip out the framework first, then port stage by stage. Don't try to wrap LangChain — that's worse than starting fresh.
+- **From a Zapier/Make multi-step:** identify the LLM step. That's the only one that needs to move here. The rest stays where it is.
+- **From a hand-rolled script:** congratulations, you understand the domain. This repo will feel like a faster version of what you already have.
+
+The migration usually takes a Saturday afternoon. Plan for one.
+
+---
+
 ## 🤝 Contributing
 
 Issues > PRs. If you have a use case, open an issue first. If we agree on the shape, then a PR. Random feature PRs without discussion get closed politely.
