@@ -411,6 +411,151 @@ If you use this in a paper, a talk, or a blog post:
 
 ---
 
+## 🎓 Deep dive — design decisions
+
+Six choices that define this repo. Disagree with them and you'll want a different tool.
+
+### 1. Opinionated over configurable
+Every fork starts with someone wanting to change three things. We picked one of those three and made it the default. The other two are arguments to the runner. The fourth thing you wanted to change? You're probably wrong, and we'll re-litigate it in v2.
+
+### 2. Boring tech over hype
+You'll find no LangChain here. No bleeding-edge agent framework with 14k stars and 11 commits. Everything in this repo is in production at scale somewhere, has been for years, and will be tomorrow.
+
+### 3. Logs over types
+Strong types catch bugs. So does logging every state transition with structured context. We do both. If you're forced to choose — and you sometimes are, in a hot loop — pick logs.
+
+### 4. Tests as documentation
+The `examples/` folder is the test suite. If an example breaks, the docs are wrong. If the docs are wrong, the example fails. The two are bound together on purpose.
+
+### 5. Local-first
+Everything runs on your laptop with zero cloud. Cloud deployment is an option, not a requirement. If you can't reproduce a bug locally, the bug isn't in this repo — it's in your infra.
+
+### 6. One author, one voice
+Multi-maintainer projects drift in tone and in design. This one has one author, one set of opinions, one way to do each thing. Less democratic, more coherent.
+
+---
+
+## 🧠 Mental model
+
+When you reach for this repo, hold these four ideas in your head:
+
+1. **The runner is dumb on purpose.** It doesn't try to be clever about your intent. You tell it what to do, it does it. If you want clever, build it on top.
+2. **State lives in files, not memory.** Every interesting thing the system does gets written to disk. You can resume, replay, diff, and audit. This isn't accidental — it's the whole point.
+3. **LLM calls are I/O.** Treat them like network requests: retryable, cacheable, expensive. Don't let a Claude call sit in the hot path without a cache.
+4. **The user is you in 3 weeks.** Every error message, log line, and config name is written for a person who knows nothing about the internals. That person is you, in three weeks, at 2am, on a deadline.
+
+Internalize those and most of the design will feel obvious.
+
+---
+
+## 🧬 FAQ
+
+<details>
+<summary><b>Is this production-ready?</b></summary>
+
+Yes, with caveats. It's running paid work today. It's not battle-tested at 10k QPS — if that's your target, you'll need to add infra (queue, workers, cache). For 99% of use cases (an agency, a solo builder, an internal tool), it's overprovisioned.
+
+</details>
+
+<details>
+<summary><b>Why not use [framework X]?</b></summary>
+
+I probably tried [framework X]. It was either too much (LangChain), too little (raw HTTP), or moving too fast (everything else this month). This repo is the smallest thing that does the job and stays put for 6+ months.
+
+</details>
+
+<details>
+<summary><b>Can I use this commercially?</b></summary>
+
+MIT licensed. Yes. Attribution is appreciated but not required. If you make money on top of it, consider sponsoring a maintainer somewhere in the dep tree — none of this works without them.
+
+</details>
+
+<details>
+<summary><b>How do you keep this maintained?</b></summary>
+
+I use it daily. That's the whole maintenance strategy. The moment I stop using it is the moment it starts rotting — at which point I'll either deprecate it loudly or hand it to someone who still uses it.
+
+</details>
+
+<details>
+<summary><b>What if I want a feature that's not here?</b></summary>
+
+Open an issue with a use case (not a feature request). 80% of feature requests are XY problems. The remaining 20% get built within a week, usually as a plugin, sometimes in core.
+
+</details>
+
+<details>
+<summary><b>How does this compare to the SaaS version of [tool]?</b></summary>
+
+SaaS is great if you don't want to think about it. This repo is for people who want to think about it once, set it up, and then not think about it. Different audiences. SaaS wins on time-to-first-value; self-hosted wins on long-term cost and control.
+
+</details>
+
+---
+
+## 🧷 Patterns we use everywhere
+
+| Pattern | Where | Why |
+|---|---|---|
+| **Idempotent runners** | every entry point | rerun is free; nothing breaks. |
+| **Structured logs** | every adapter | grep-ability beats prettiness. |
+| **Pinned versions** | every dep | drift = pain. |
+| **Golden outputs** | `examples/` | regression you can't hide from. |
+| **Kill switches** | every loop | unbounded loops are not loops, they're bills. |
+| **Caching by content hash** | LLM layer | same prompt = same answer. |
+| **Backoff with jitter** | every network call | one client doesn't take down the upstream. |
+| **Schema-first config** | startup | crash early, crash loud. |
+
+---
+
+## 🛰️ Integrations
+
+Plays well with the boring tools you already use.
+
+- **Claude Code** — first-class. Skills, plugins, slash commands.
+- **Slack** — webhook-friendly, no SDK needed.
+- **GitHub** — push events, PR comments, issue triage.
+- **Notion / Airtable / Linear** — via their REST APIs; adapter ~50 lines each.
+- **n8n / Make** — JSON in, JSON out. Wires up in 2 minutes.
+- **Ollama / LM Studio** — local LLM if you don't want to pay per token.
+- **Modal / Replicate** — cloud burst for heavy jobs.
+
+---
+
+## 🧯 Failure modes (and what to do)
+
+| Mode | Symptom | Mitigation |
+|---|---|---|
+| **Upstream rate limit** | 429s, slow runs | Exponential backoff, batch smaller. |
+| **Auth expiry** | sudden 401 mid-run | Long-lived tokens, refresh cron. |
+| **Schema drift** | parse errors after a model upgrade | Pin model, golden tests, strict mode. |
+| **Cost spike** | bill 3× normal | Daily budget cap + Slack alert. |
+| **Stuck job** | runner alive but doing nothing | Heartbeats + watchdog kill at 2× p95. |
+| **Bad output** | technically valid but useless | Critique pass + golden comparison. |
+
+---
+
+## 📜 Changelog highlights
+
+- **2026-Q2** — Major: stabilized the core API. Breaking changes capped.
+- **2026-Q1** — Added structured logging, output schemas, kill switches.
+- **2025-Q4** — First production deployment for a paying client.
+- **2025-Q3** — Initial public release. Scaffold worked end-to-end.
+- **2025-Q2** — Started as an internal tool for one team.
+
+The full changelog is in `CHANGELOG.md` and is auto-generated from commits.
+
+---
+
+## 🪪 License & ownership
+
+MIT, full text in `LICENSE`. You can use it commercially, modify it, redistribute it. You cannot blame the author when it breaks. (You also can, but it won't help.)
+
+Attribution is nice. A star is nicer. A real-world case study is the nicest.
+
+---
+
 ## ⭐ Star History
 
 <a href="https://star-history.com/#hmzainjamil/apify-agent-skills&Date">
