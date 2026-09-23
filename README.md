@@ -1,5 +1,9 @@
 # apify-agent-skills
 
+<!-- HMZ PORTFOLIO STANDARD -->
+> Portfolio status: active · Visibility: public · Source of truth: current repository source.
+<!-- END HMZ PORTFOLIO STANDARD -->
+
 > **Web extraction skills for Claude Code — every Apify actor as a one-line skill** — JavaScript skill pack wrapping the top 60 Apify actors in Claude Code manifests — Maps, LinkedIn, Twitter, Amazon, etc.
 
 <p align="center">
