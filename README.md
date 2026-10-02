@@ -18,7 +18,7 @@ This repository provides instructions and templates. It is not itself a hosted s
 | `.claude-plugin/` | Claude Code plugin and marketplace metadata |
 | `gemini-extension.json` | Gemini extension metadata |
 
-Skill-specific reference files describe schemas, Actor patterns, data stores, workflows, and supported Actor examples. The [Actor README guideline](skills/apify-actor-development/references/actor-readme.md) is upstream-derived writing material; its generic legal disclaimer is not a verified claim about any particular Actor and should not be copied as-is. Describe actual data collection and handling, and have an accountable owner review legal statements.
+Skill-specific references describe schemas, Actor patterns, data stores, workflows, and examples. The [Actor README guideline](skills/apify-actor-development/references/actor-readme.md) is upstream-derived editorial guidance. It requires claims to be checked against Actor source and current platform documentation, data sources/fields/filters/retention/actions to be described accurately, and legal statements to receive project-owner review. It provides no blanket safety, legal, or privacy disclaimer.
 
 ## Requirements
 
