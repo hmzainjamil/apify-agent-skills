@@ -1,6 +1,8 @@
 # Actor README guidelines
 
-The README is the Actor's landing page on Apify Store. It serves as SEO content, first impression, usage guide, and support resource. **Always generate a README.md when creating or deploying an Actor.**
+The README is the Actor's landing page on Apify Store and a user guide. Write one when creating or deploying an Actor.
+
+These are editorial prompts, not claims to copy. Verify every feature, command, data flow, pricing statement, and platform capability against the current Actor source/configuration and dated primary documentation. Label unknown behavior as unverified and ask the maintainer when evidence is missing.
 
 ## Required structure
 
@@ -9,32 +11,31 @@ Write in Markdown. Use H2 (`##`) for main sections (these form the table of cont
 ### 1. What does [Actor name] do?
 
 - 1-2 sentences explaining what the Actor does and doesn't do
-- Include a link to the target website
-- Mention keywords like "API" (e.g., "Instagram API alternative")
-- Bold the most important terms
+- Link to the target website only when one applies and the owner confirms the URL.
+- Use audience language naturally; include API or product comparisons only when the implementation and comparison support them.
+- Use formatting to improve scanning, not to imply importance unsupported by evidence.
 
 ### 2. Why use [Actor name]? / Why scrape [target site]?
 
 - Business use cases and benefits
 - List main features and capabilities
-- Highlight the Apify platform advantages: scheduling, API access, integrations, proxy rotation, and monitoring
+- Describe Apify platform features only when the specific Actor configuration and current platform documentation establish that they apply. Do not imply scheduling, integrations, proxy rotation, or monitoring is included by default.
 
 ### 3. What data can [Actor name] extract?
 
-- Table showing main data fields the Actor outputs (field name, type, description)
-- Don't list every field — focus on the most useful and understandable ones
+- List output fields from the current schema or source, with type and meaning; identify optional or conditional fields.
+- Describe actual input sources, selected fields, filters, stored data, and downstream actions where relevant.
 
 ### 4. How to scrape [target site]
 
-- Numbered step-by-step tutorial (Google may pick these up as rich snippets)
-- Include a link to blog tutorials if they exist
+- Give setup and usage steps that match the current input schema and Actor behavior.
+- Link to maintained tutorials when available. Do not promise search snippets or ranking.
 
 ### 5. How much will it cost to scrape [target site]?
 
-- Set pricing expectations based on the Actor's pricing model
-- For pay-per-result: mention free tier limits and what larger plans offer
-- For compute units: explain average data volume per dollar
-- Cost-related questions rank well in Google search
+- State pricing or cost only when verified against the current Actor configuration and current Apify pricing information; include the verification date and source.
+- Do not extrapolate free-tier limits, plan benefits, unit consumption, or cost per result without reproducible Actor-specific evidence.
+- Do not claim that cost-related wording improves search rank.
 
 ### 6. Input
 
@@ -44,9 +45,8 @@ Write in Markdown. Use H2 (`##`) for main sections (these form the table of cont
 
 ### 7. Output
 
-- Include: "You can download the dataset in various formats such as JSON, HTML, CSV, or Excel"
-- Show a simplified JSON output example (2-3 items)
-- If output is complex, show separate examples for different data types
+- List only export formats supported by the current Actor/API and show examples that match its output schema.
+- Mark examples as illustrative when they are not generated from a verified run.
 
 ### 8. Tips / Advanced options (if applicable)
 
@@ -55,8 +55,9 @@ Write in Markdown. Use H2 (`##`) for main sections (these form the table of cont
 
 ### 9. FAQ, Disclaimers, and Support
 
-- Legal/scraping disclaimer (use this template and customize with the target site name):
-  > Our Actors are ethical and do not extract any private user data, such as email addresses, gender, or location. They only extract what the user has chosen to share publicly. We therefore believe that our Actors, when used for ethical purposes by Apify users, are safe. However, you should be aware that your results could contain personal data. Personal data is protected by the GDPR in the European Union and by other regulations around the world. You should not scrape personal data unless you have a legitimate reason to do so. If you're unsure whether your reason is legitimate, consult your lawyers.
+- Explain what data the Actor receives, where it obtains data, which fields/filters it applies, what it stores or sends onward, how long data is retained when known, and what actions it can perform.
+- Do not promise that an Actor is ethical, safe, lawful, private, or compliant; do not imply that public availability removes privacy obligations.
+- State actual safeguards and their limits. Have the project owner review applicable laws, platform terms, permissions, and data obligations against current primary sources; avoid giving legal conclusions.
 - Common troubleshooting tips
 - Mention the Issues tab for feedback
 - Link to API tab for programmatic access
@@ -66,9 +67,8 @@ Write in Markdown. Use H2 (`##`) for main sections (these form the table of cont
 
 - Include keywords naturally in H2/H3 headings (e.g., "How to scrape Instagram" not just "How to use")
 - Target "People Also Ask" style questions as H3 headings
-- Aim for at least 300 words total
-- Embed a YouTube video URL if available (renders automatically as a player)
-- Make images clickable with links
+- Use only as much text as needed to explain the verified behavior; no fixed word-count target or ranking promise.
+- Include video or image content only when relevant, available, and correctly linked; confirm rendering behavior against current platform documentation.
 
 ## Tone
 
@@ -79,7 +79,7 @@ Write in Markdown. Use H2 (`##`) for main sections (these form the table of cont
 
 ## Reference Actors
 
-Before writing a README, review these top Actors on Apify Store for best practices on structure, tone, and content:
+These Actors are examples for reviewing format and audience fit, not verified rankings, endorsements, or evidence for another Actor's claims:
 
 - [Instagram Scraper](https://apify.com/apify/instagram-scraper)
 - [Google Maps Scraper](https://apify.com/compass/crawler-google-places)
@@ -87,7 +87,7 @@ Before writing a README, review these top Actors on Apify Store for best practic
 ## Key rules
 
 - Always write the README as part of Actor development — do not skip this step
-- The first 25% of the README is what most visitors read — put the most important info there
+- Put the most useful and verified information near the start; do not rely on an unverified visitor-attention statistic.
 - Use emojis sparingly as bullet points to break up text
 - Keep images compressed but good quality
 - Use [Carbon](https://github.com/carbon-app/carbon) for code snippet screenshots if needed
