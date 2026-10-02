@@ -1,127 +1,85 @@
-# apify-agent-skills
+# Apify Agent Skills
 
-> **Web extraction skills for Claude Code — every Apify actor as a one-line skill** — JavaScript skill pack wrapping the top 60 Apify actors in Claude Code manifests — Maps, LinkedIn, Twitter, Amazon, etc.
+A multi-platform instruction pack for working with Apify Actors. It includes Claude Code plugin metadata, a Gemini extension manifest, four skills, one Actor creation command, reference guides, and a script that generates the skills index.
 
-<p align="center"><a href="https://github.com/hmzainjamil/apify-agent-skills">Repository</a> · <a href="https://github.com/hmzainjamil/apify-agent-skills/commits/main">Commits</a> · <a href="https://github.com/hmzainjamil/apify-agent-skills/issues">Issues</a></p>
-<p align="center"><img alt="Documentation" src="https://img.shields.io/badge/documentation-deep%20editorial-lightgrey"> <img alt="Lifecycle" src="https://img.shields.io/badge/lifecycle-active-success"></p>
+This repository provides instructions and templates. It is not itself a hosted scraper service or a bundled collection of the third-party Actors described in its guides.
 
-<!-- HMZ DEEP README v1 -->
+## Included
 
-## At a glance
-
-| Field | Current state |
+| Path | Purpose |
 |---|---|
-| Repository | apify-agent-skills |
-| Visibility | Public |
-| Lifecycle | Active |
-| Evidence basis | Current repository documentation and source-visible material |
+| `skills/apify-ultimate-scraper/` | Guidance for choosing and running Apify Actors through the Apify CLI |
+| `skills/apify-actor-development/` | Actor development and deployment workflow |
+| `skills/apify-actorization/` | Guidance for adapting software to the Actor model |
+| `skills/apify-generate-output-schema/` | Guidance for deriving Actor schemas from source |
+| `commands/create-actor.md` | Guided Actor creation command |
+| `agents/AGENTS.md` | Generated skills index for agent hosts |
+| `scripts/generate_agents.py` | Generates that index and validates marketplace metadata |
+| `.claude-plugin/` | Claude Code plugin and marketplace metadata |
+| `gemini-extension.json` | Gemini extension metadata |
 
-## Why this exists
+Skill-specific reference files describe schemas, Actor patterns, data stores, workflows, and supported Actor examples.
 
-**Web extraction skills for Claude Code — every Apify actor as a one-line skill** — JavaScript skill pack wrapping the top 60 Apify actors in Claude Code manifests — Maps, LinkedIn, Twitter, Amazon, etc.
+## Requirements
 
-The README focuses on skill definitions, actor boundaries, and integration behavior. Provider capabilities are treated as external dependencies unless demonstrated in the repository.
+- A compatible AI agent host for Markdown-based skill instructions.
+- Apify CLI and an authorized Apify account for workflows that create, run, or deploy Actors.
+- `uv` and Python 3.10 or later to run `scripts/generate_agents.py`.
 
-## 📚 Concepts
+The Claude marketplace metadata names the upstream Apify project and Apache-2.0 license. This repository is a fork or mirror presentation of those materials; check upstream and the license files before redistributing. The local tree has no root LICENSE file.
 
-Every row points at a real file in this repo. Open it, skim it, you'll know more than 90% of forkers.
+## Use
 
-| File | Action | Why it matters |
-|---|---|---|
-| `src/index` | Read | Entry point — where a run starts. |
-| `config` | Edit | Core logic — the bit you'll customize first. |
-| `package.json` | Run | Config — knobs you'll turn week one. |
-| `docs/intro` | Fork | Glue — connects the moving parts. |
-| `scripts/build` | Extend | Surface — what users actually touch. |
-| `tests/main` | Wire | Adapter — talks to the outside world. |
-| `lib/core` | Ship | Schema — the data contract. |
-| `cli/main` | Test | Helper — the boring useful stuff. |
-| `examples/basic` | Lint | Manifest — declares capabilities. |
-| `Makefile` | Deploy | Doc — for the next maintainer (you, in 6 months). |
-
-## ▶️ How it works
-
-```
-input → router → core ──► adapters ──► persist
-              │                        │
-              └────► surface ◄─────────┘
-```
-
-Six layers. Each does one job. You can swap any of them.
-
-| Layer | Name | Job |
-|---|---|---|
-| **L1** | Entry | CLI / handler that takes the request. |
-| **L2** | Router | Dispatches to the right module. |
-| **L3** | Core | Business logic, the actual work. |
-| **L4** | Adapters | External calls — APIs, disk, LLM. |
-| **L5** | Persist | State you keep across runs. |
-| **L6** | Surface | What humans see — UI, logs, files. |
-
-## 📦 Install
+Clone and inspect the repository:
 
 ```bash
 git clone https://github.com/hmzainjamil/apify-agent-skills.git
 cd apify-agent-skills
-# follow the per-stack instructions in this repo
 ```
 
-Prerequisites: a modern shell, a recent runtime for whatever language this repo uses, and an internet connection that doesn't drop every 12 seconds.
+Use the skill instructions through your host's documented setup and discovery process. The repository has no installer script. The plugin and extension manifests provide host metadata but do not guarantee that a host version will load them.
 
-## 🚀 Usage
+To regenerate the agent skills index and validate marketplace consistency:
 
 ```bash
-./run.sh --help
-./run.sh --example basic
+uv run scripts/generate_agents.py
 ```
 
-Five minutes from clone to a meaningful output. If it takes longer, something's wrong — open an issue.
+This writes `agents/AGENTS.md`. Review the diff before committing generated changes.
 
-## ⚙️ Configuration
+## External services, data and costs
 
-Ten knobs. Sensible defaults. Override what you need.
+The scraper guidance can invoke third-party Apify Actors through the Apify CLI. Those runs may send requests to external websites and store results in Apify datasets or key-value stores. Actor availability, permissions, pricing, site rules, and data retention are controlled by Apify, each Actor publisher, and the target service.
 
-| Key | Type | Required | Default | Effect |
-|---|---|---|---|---|
-| `OPT_1` | `string` | no | sensible default | Drives behavior at stage 1. |
-| `OPT_2` | `int` | no | sensible default | Drives behavior at stage 2. |
-| `OPT_3` | `bool` | yes | sensible default | Drives behavior at stage 3. |
-| `OPT_4` | `path` | no | sensible default | Drives behavior at stage 4. |
-| `OPT_5` | `url` | yes | sensible default | Drives behavior at stage 5. |
-| `OPT_6` | `enum` | no | sensible default | Drives behavior at stage 6. |
-| `OPT_7` | `list` | no | sensible default | Drives behavior at stage 7. |
-| `OPT_8` | `json` | no | sensible default | Drives behavior at stage 8. |
-| `OPT_9` | `secret` | yes | sensible default | Drives behavior at stage 9. |
-| `OPT_10` | `duration` | no | sensible default | Drives behavior at stage 10. |
-
-## 🧪 Testing strategy
-
-| Layer | Tool | Catches |
-|---|---|---|
-| **Unit** | language-native runner | logic errors in pure functions. |
-| **Golden** | snapshot diff | regressions in prompt/model behavior. |
-| **Smoke** | end-to-end on tiny example | wiring errors, missing creds. |
-
-Cost: ~$0.03 per CI run. ROI: catching a bad merge is worth thousands.
-
-## 🛡️ Security notes
-
-- **Secrets in env, not in repo.** `.env` is gitignored. There's a `.env.example` to copy.
-- **Validate inbound payloads.** Don't trust webhook bodies. Schema-check everything.
-- **Rotate API keys quarterly.** Or sooner if you suspect anything.
-- **Log redaction.** Don't print full prompts with PII.
-- **Egress allowlist.** Restrict outbound HTTP to known domains where you can.
-- **Tokens have a TTL.** Long-lived tokens are a liability.
-- **Audit the dep tree quarterly.** Most risk is transitive.
+- Review the selected Actor's documentation, permissions, pricing, and output before running it.
+- Use a scoped `APIFY_TOKEN`; never paste tokens into prompts, command history, committed files, or generated reports.
+- Scrape only data and sites you are authorized to access. Follow applicable terms, privacy rules, and data minimization requirements.
+- Avoid collecting sensitive personal information unless you have a lawful basis and approved handling.
 
 ## Limitations
 
-- Third-party site behavior and terms can change.
-- Agent output quality depends on the host model and runtime.
-- Quantitative claims require reproducible evaluation.
+- Skill files are instructions; tool access and behavior depend on the host.
+- Actors named in the guides are external services, not included code in this repository.
+- No benchmark, test suite, or cost guarantee is declared here.
+- Plugin metadata identifies Apify as author and points to the upstream repository. Verify source attribution and license obligations before repackaging.
 
+## Repository map
 
+- [Skills](skills/)
+- [Actor creation command](commands/create-actor.md)
+- [Generated skills index](agents/AGENTS.md)
+- [Index generator](scripts/generate_agents.py)
+- [Claude plugin metadata](.claude-plugin/plugin.json)
+- [Gemini extension metadata](gemini-extension.json)
 
-## Maintainer
+## Contributing
 
-[hmzainjamil](https://github.com/hmzainjamil)
+Open an issue with the relevant skill or reference path, expected behavior, and a safe example. Do not include tokens, private account data, or scraped personal information.
+
+## Security and privacy
+
+See [SECURITY.md](SECURITY.md) for token, scraping, and external-service guidance.
+
+## Attribution and license
+
+Plugin metadata points to [Apify's upstream agent-skills repository](https://github.com/apify/agent-skills) and identifies Apache-2.0. This fork's tree does not include a root license file. Verify the upstream license and required notices before redistributing.
