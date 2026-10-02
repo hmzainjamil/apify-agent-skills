@@ -65,7 +65,7 @@ The scraper guidance can invoke third-party Apify Actors through the Apify CLI. 
 
 ## Repository map
 
-- [Skills](skills/)
+- [Skills](skills/apify-ultimate-scraper/SKILL.md)
 - [Actor creation command](commands/create-actor.md)
 - [Generated skills index](agents/AGENTS.md)
 - [Index generator](scripts/generate_agents.py)
